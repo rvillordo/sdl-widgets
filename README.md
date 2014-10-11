@@ -1,5 +1,7 @@
-sdl-widgets
+sdl2-widgets
 ===========
+
+SDL2 widgets
 
 supported widgets
 
@@ -16,6 +18,6 @@ LIST
 BOX			
 
 
-this was written in one night and was extracted from the original code
+widget.c file was written in one night and was extracted from the original code (a small user interface for rtl_fm.c)
 i'll probally add it to qdev library in the future
 
