@@ -16,8 +16,6 @@ LIST
 BOX			
 
 
-this was written in one night just for adding a simple graphic interface for 
-rtl-sdr applications. it also support audio output for rtlfm and other applications.
-
+this was written in one night and was extracted from the original code
 i'll probally add it to qdev library in the future
 
