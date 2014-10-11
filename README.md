@@ -2,19 +2,18 @@ sdl-widgets
 ===========
 
 supported widgets
-enum {
-	SUI_BUTTON	= 0,
-	SUI_GRAPH,
-	SUI_CHECKBUTTON,
-	SUI_PROGRESSBAR,
-	SUI_TOOLBUTTON,
-	SUI_SLIDERBAR,
-	SUI_INPUTTEXT,
-	SUI_LABEL,
-	SUI_FRAME,
-	SUI_LIST,		// aka combobox
-	SUI_BOX			
-};
+
+BUTTON
+GRAPH
+CHECKBUTTON
+PROGRESSBAR
+TOOLBUTTON
+SLIDERBAR
+INPUTTEXT
+LABEL
+FRAME
+LIST
+BOX			
 
 
 this was written in one night just for adding a simple graphic interface for 
