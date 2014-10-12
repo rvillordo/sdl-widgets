@@ -313,7 +313,7 @@ void sdl_print_chargen(sdl_widget_t *widget, int x, int y, char *msg, int mlen, 
 			continue;
 		}
 		sy = y;
-		for(yy = 1; yy < xsy-2; yy++, sy++) {
+		for(yy = 1; yy < xsy; yy++, sy++) {
 			sx = xx;
 			for(k = (chargen->w + 1); k >= 0; k--, sx+=scale_x) {
 				if((yy/scale_y) >= 15) {
@@ -597,7 +597,7 @@ void sdl_draw_progressbar(sdl_widget_t *widget, SDL_Renderer *render)
 	r.w = w = widget->r.w;
 	r.h = h = widget->r.h;
 
-	r.w = (widget->cur * 100) / widget->max;
+	r.w = ((widget->cur - widget->r.x) * 100) / (widget->max);
 	sdl_draw_border(render, x, y, w, h, BORDER_IN);
 
 	r.x += 2;
@@ -1357,18 +1357,28 @@ void sliderbar_event(void *ptr)
 
 static char *samplesR[] = { " -- RATE -- ", "3200000", "2700000", "2400000", "2200000", "1700000", "1400000", "1000000", "900000" };
 
+/* 
+ * not thread safe at all */
 void progress_loop(void *ptr)
 {
 	static int inc = 1;
-	int a, b;
+	int a, b, val;
 	sdl_widget_t *pbar = ptr;
 	a = b = 0;
 
 	while(1) {
-		SDL_Delay(1000);
-		pbar->cur+=1;
+		SDL_Delay(25);
+		pbar->cur+=inc;
+ 		val = (((pbar->cur - pbar->r.x) * pbar->max) / pbar->r.w);
+		if(val>=(pbar->max)) {
+			inc=-1;
+		}
+		else if(val<=pbar->min) {
+			inc=1;
+		}
+		pbar->cur+=inc;
 		pbar->dirty=1;
-		pbar->window->dirty=1;
+		windowList[windowID]->dirty=1;
 	}
 }
 
@@ -1528,14 +1538,17 @@ int main(int argc, char **argv)
 
 	sdl_window_add_widget(sdl, frame);
 
+	SDL_CreateThread(progress_loop, "progress_loop", pbar);
+
 	for(;do_quit == 0;) 
 	{
 		do_quit = sdl_loop(sdl);
+		if(sdl->dirty)
+			sdl_window_redraw(sdl);
 		SDL_Delay(1);
 	}
 
 	exit(0);
-
 
 	}
 

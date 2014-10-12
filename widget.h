@@ -287,4 +287,8 @@ void sdl_draw_sliderbar(sdl_widget_t *wid, SDL_Renderer *render);
 void sdl_draw(SDL_Renderer *render, int x, int y, unsigned char **buf);
 
 void sdl_widget_set_dataptr(sdl_widget_t *, void *, int);
+
+
+int getidx(chargen_t *chargen, unsigned char c);
+
 #endif
